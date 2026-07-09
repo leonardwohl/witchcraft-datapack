@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minecraft Brewing Recipe",
+  "description": "Schema for minecraft:brewing recipe type (Data Pack version 110+)",
+  "type": "object",
+  "required": ["type", "input", "reagent", "output"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "minecraft:brewing"
+    },
+    "input": {
+      "$ref": "#/$defs/potion_ingredient"
+    },
+    "reagent": {
+      "$ref": "#/$defs/potion_ingredient"
+    },
+    "output": {
+      "$ref": "#/$defs/item_stack"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "potion_ingredient": {
+      "type": "object",
+      "required": ["item"],
+      "properties": {
+        "item": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
+        },
+        "potion_contents": {
+          "type": "object",
+          "properties": {
+            "potion": {
+              "type": "string",
+              "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
+            },
+            "potions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "effects": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "item_stack": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
+        },
+        "components": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
