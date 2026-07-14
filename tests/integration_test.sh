@@ -35,7 +35,8 @@ fi
 cleanup() {
     echo "Cleaning up..."
     $COMPOSE down -v 2>/dev/null || true
-    rm -rf "$SCRIPT_DIR/server-data"
+    # server-data may have root-owned files from the container
+    rm -rf "$SCRIPT_DIR/server-data" 2>/dev/null || sudo rm -rf "$SCRIPT_DIR/server-data" 2>/dev/null || true
 }
 trap cleanup EXIT
 
