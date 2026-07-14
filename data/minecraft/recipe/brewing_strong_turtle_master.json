@@ -3,7 +3,7 @@
   "input": {
     "item": "minecraft:potion",
     "potion_contents": {
-      "potion": "minecraft:thick"
+      "potion": "minecraft:turtle_master"
     }
   },
   "reagent": {
@@ -13,7 +13,7 @@
     "id": "minecraft:potion",
     "components": {
       "minecraft:potion_contents": {
-        "potion": "minecraft:luck"
+        "potion": "minecraft:strong_turtle_master"
       },
       "minecraft:max_stack_size": 32
     }

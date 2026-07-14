@@ -1,19 +1,19 @@
 {
   "type": "minecraft:brewing",
   "input": {
-    "item": "minecraft:potion",
+    "item": "minecraft:lingering_potion",
     "potion_contents": {
-      "potion": "minecraft:thick"
+      "potion": "minecraft:fire_resistance"
     }
   },
   "reagent": {
-    "item": "minecraft:glowstone_dust"
+    "item": "minecraft:redstone"
   },
   "output": {
-    "id": "minecraft:potion",
+    "id": "minecraft:lingering_potion",
     "components": {
       "minecraft:potion_contents": {
-        "potion": "minecraft:luck"
+        "potion": "minecraft:long_fire_resistance"
       },
       "minecraft:max_stack_size": 32
     }

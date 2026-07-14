@@ -1,19 +1,19 @@
 {
   "type": "minecraft:brewing",
   "input": {
-    "item": "minecraft:potion",
+    "item": "minecraft:splash_potion",
     "potion_contents": {
-      "potion": "minecraft:thick"
+      "potion": "minecraft:strong_swiftness"
     }
   },
   "reagent": {
-    "item": "minecraft:glowstone_dust"
+    "item": "minecraft:dragon_breath"
   },
   "output": {
-    "id": "minecraft:potion",
+    "id": "minecraft:lingering_potion",
     "components": {
       "minecraft:potion_contents": {
-        "potion": "minecraft:luck"
+        "potion": "minecraft:strong_swiftness"
       },
       "minecraft:max_stack_size": 32
     }
