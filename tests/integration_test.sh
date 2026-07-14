@@ -4,13 +4,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# Auto-detect container runtime
-if command -v podman &>/dev/null; then
-    COMPOSE="podman compose"
-elif command -v docker &>/dev/null; then
+# Auto-detect container runtime (prefer docker if daemon is running, else podman)
+if command -v docker &>/dev/null && docker info &>/dev/null; then
     COMPOSE="docker compose"
+elif command -v podman &>/dev/null; then
+    COMPOSE="podman compose"
 else
-    echo "ERROR: Neither podman nor docker found on PATH"
+    echo "ERROR: Neither docker (running) nor podman found"
     exit 1
 fi
 TIMEOUT=180
