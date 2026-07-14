@@ -9,11 +9,11 @@ validate: ## Run JSON schema validation on all recipes
 	@.venv/bin/pip install -r tests/requirements.txt -q
 	@.venv/bin/python3 tests/validate_recipes.py
 
-test: ## Run Docker integration test (requires Docker)
+test: ## Run integration test (requires Docker or Podman)
 	@tests/integration_test.sh
 
 test-all: validate test ## Run all tests (schema + integration)
 
-clean: ## Remove Docker containers and test artifacts
-	@cd tests && docker compose down -v 2>/dev/null || true
+clean: ## Remove containers and test artifacts
+	@cd tests && (podman compose down -v 2>/dev/null || docker compose down -v 2>/dev/null || true)
 	@rm -rf tests/server-data

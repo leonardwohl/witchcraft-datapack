@@ -17,7 +17,7 @@ services:
     ports:
       - "25575:25575"
     volumes:
-      - ./server-data:/data
-      - ..:/data/world/datapacks/witchcraft:ro
+      - ${SERVER_DATA:-./server-data}:/data
+      - ${DATAPACK_DIR:-..}:/data/world/datapacks/witchcraft:ro
     tmpfs:
       - /data/world/region

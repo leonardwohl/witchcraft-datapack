@@ -4,15 +4,38 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-COMPOSE="docker compose"
+# Auto-detect container runtime
+if command -v podman &>/dev/null; then
+    COMPOSE="podman compose"
+elif command -v docker &>/dev/null; then
+    COMPOSE="docker compose"
+else
+    echo "ERROR: Neither podman nor docker found on PATH"
+    exit 1
+fi
 TIMEOUT=180
 RCON_PASS="testing"
 RCON_PORT=25575
 
+# Podman on macOS can't mount /Volumes — copy datapack to a temp dir under /Users
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [[ "$REPO_ROOT" == /Volumes/* ]] && command -v podman &>/dev/null; then
+    TMPDIR_BASE="${HOME}/.cache/witchcraft-test"
+    mkdir -p "$TMPDIR_BASE/datapack" "$TMPDIR_BASE/server-data"
+    rsync -a --delete --exclude='.git' --exclude='.venv' --exclude='tests/server-data' \
+        "$REPO_ROOT/" "$TMPDIR_BASE/datapack/"
+    export DATAPACK_DIR="$TMPDIR_BASE/datapack"
+    export SERVER_DATA="$TMPDIR_BASE/server-data"
+else
+    export DATAPACK_DIR="$REPO_ROOT"
+    export SERVER_DATA="$SCRIPT_DIR/server-data"
+    mkdir -p "$SERVER_DATA"
+fi
+
 cleanup() {
     echo "Cleaning up..."
     $COMPOSE down -v 2>/dev/null || true
-    rm -rf server-data
+    rm -rf "$SCRIPT_DIR/server-data"
 }
 trap cleanup EXIT
 
@@ -20,8 +43,7 @@ echo "=== Witchcraft Datapack Integration Test ==="
 echo ""
 
 # Clean slate
-cleanup 2>/dev/null || true
-mkdir -p server-data
+$COMPOSE down -v 2>/dev/null || true
 
 echo "[1/4] Starting Minecraft server (snapshot)..."
 $COMPOSE up -d
