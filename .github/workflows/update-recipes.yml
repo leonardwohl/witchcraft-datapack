@@ -3,6 +3,9 @@ name: Update Recipes from Vanilla
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update:
     name: Extract and Update Vanilla Recipes
