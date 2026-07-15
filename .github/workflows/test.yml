@@ -42,5 +42,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check recipe coverage against vanilla server JAR
+      - name: Extract vanilla recipes and check coverage
         run: python scripts/extract_vanilla_recipes.py
+
+      - name: Show diff if drift detected
+        if: failure()
+        run: python scripts/extract_vanilla_recipes.py --update && git diff --stat
