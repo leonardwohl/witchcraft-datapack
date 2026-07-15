@@ -28,12 +28,15 @@ def download_server_jar(dest: Path) -> None:
 
 
 def extract_brewing_recipes(jar_path: Path) -> dict[str, dict]:
-    """Extract all minecraft:brewing recipes from the server JAR."""
+    """Extract all minecraft:brewing recipes from the server JAR.
+    
+    Handles the bundled JAR format (1.18+) where the actual server is nested
+    inside META-INF/versions/<version>/server-<version>.jar
+    """
     recipes = {}
 
-    with zipfile.ZipFile(jar_path, "r") as zf:
+    def scan_zip_for_recipes(zf: zipfile.ZipFile) -> None:
         for entry in zf.namelist():
-            # Vanilla recipes are at data/minecraft/recipe/*.json inside the JAR
             if entry.startswith("data/minecraft/recipe/") and entry.endswith(".json"):
                 with zf.open(entry) as f:
                     try:
@@ -44,6 +47,23 @@ def extract_brewing_recipes(jar_path: Path) -> dict[str, dict]:
                     if data.get("type") == "minecraft:brewing":
                         name = Path(entry).stem
                         recipes[name] = data
+
+    with zipfile.ZipFile(jar_path, "r") as zf:
+        # Try direct extraction first
+        scan_zip_for_recipes(zf)
+
+        # If nothing found, look for nested server JAR (bundled format)
+        if not recipes:
+            nested_jars = [e for e in zf.namelist() if e.startswith("META-INF/versions/") and e.endswith(".jar")]
+            for nested in nested_jars:
+                print(f"  Checking nested JAR: {nested}")
+                with zf.open(nested) as nested_f:
+                    import io
+                    nested_data = io.BytesIO(nested_f.read())
+                    with zipfile.ZipFile(nested_data, "r") as nested_zf:
+                        scan_zip_for_recipes(nested_zf)
+                if recipes:
+                    break
 
     return recipes
 
