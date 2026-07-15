@@ -3,7 +3,7 @@
   "input": {
     "item": "minecraft:potion",
     "potion_contents": {
-      "potion": "minecraft:thick"
+      "potions": "minecraft:thick"
     }
   },
   "reagent": {

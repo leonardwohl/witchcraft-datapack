@@ -37,10 +37,18 @@
               "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
             },
             "potions": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
+              "oneOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
             },
             "effects": {
               "type": "object"
