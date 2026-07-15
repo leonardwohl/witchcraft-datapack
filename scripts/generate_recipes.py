@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate all vanilla Minecraft brewing recipes as JSON files with max_stack_size: 16."""
+"""Generate all vanilla Minecraft brewing recipes as JSON files with max_stack_size: 64."""
 
 import json
 import os
@@ -32,7 +32,7 @@ def make_recipe(input_item: str, input_potion: str, reagent: str, output_item: s
                 "minecraft:potion_contents": {
                     "potion": f"minecraft:{output_potion}",
                 },
-                "minecraft:max_stack_size": 16,
+                "minecraft:max_stack_size": 64,
             },
         },
     }
