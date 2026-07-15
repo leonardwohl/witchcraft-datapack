@@ -1,4 +1,4 @@
-.PHONY: validate test test-all clean help
+.PHONY: validate test test-all clean help drift-check update-recipes
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
@@ -11,6 +11,14 @@ validate: ## Run JSON schema validation on all recipes
 
 test: ## Run integration test (requires Docker or Podman)
 	@tests/integration_test.sh
+
+drift-check: ## Check our recipes match vanilla server JAR (requires internet)
+	@test -d .venv || python3 -m venv .venv
+	@.venv/bin/python3 scripts/extract_vanilla_recipes.py
+
+update-recipes: ## Regenerate recipe overrides from vanilla server JAR
+	@test -d .venv || python3 -m venv .venv
+	@.venv/bin/python3 scripts/extract_vanilla_recipes.py --update
 
 test-all: validate test ## Run all tests (schema + integration)
 
