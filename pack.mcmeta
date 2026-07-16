@@ -1,6 +1,7 @@
 {
   "pack": {
-    "pack_format": 110,
+    "min_format": 110,
+    "max_format": 110,
     "description": "Witchcraft - Custom brewing recipes"
   }
 }
