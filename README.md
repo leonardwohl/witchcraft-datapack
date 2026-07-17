@@ -13,13 +13,43 @@ Potions brewed with this datapack stack to 64 in your inventory. All vanilla bre
 
 ## Installation
 
-Copy or symlink this repo into your world's `datapacks/` folder:
+### Download
 
+Grab the latest release zip from [GitHub Releases](https://github.com/leonardwohl/witchcraft-datapack/releases/latest).
+
+### Singleplayer / Vanilla Server
+
+1. Download `witchcraft-stackable-potions.zip`
+2. Place it in your world's `datapacks/` folder:
+   ```
+   .minecraft/saves/<world>/datapacks/witchcraft-stackable-potions.zip
+   ```
+3. Run `/reload` or restart the game
+
+Alternatively, unzip and place the folder directly:
 ```
 .minecraft/saves/<world>/datapacks/witchcraft/
 ```
 
-Then run `/reload` or restart the server.
+### Docker (itzg/minecraft-server)
+
+Use the `DATAPACKS` environment variable to auto-install from the GitHub release:
+
+```yaml
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    environment:
+      EULA: "TRUE"
+      VERSION: "SNAPSHOT"
+      DATAPACKS: "https://github.com/leonardwohl/witchcraft-datapack/releases/latest/download/witchcraft-stackable-potions.zip"
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./data:/data
+```
+
+The datapack will be downloaded and installed automatically on server startup.
 
 ## Development
 
