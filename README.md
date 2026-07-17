@@ -1,4 +1,4 @@
-# Witchcraft Datapack
+# Witchcraft: Stackable Potions
 
 A Minecraft Java datapack that makes all brewed potions stackable to 64.
 

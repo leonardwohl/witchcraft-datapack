@@ -2,7 +2,7 @@
   "pack": {
     "min_format": 110,
     "max_format": 110,
-    "description": "Witchcraft - Custom brewing recipes"
+    "description": "Witchcraft: Stackable Potions"
   },
   "filter": {
     "block": [
