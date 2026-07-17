@@ -51,6 +51,10 @@ services:
 
 The datapack will be downloaded and installed automatically on server startup.
 
+## License
+
+This work is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
 ## Development
 
 Requires Python 3.12+.
