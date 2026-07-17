@@ -7,13 +7,10 @@
     }
   },
   "output": {
+    "id": "minecraft:diamond",
     "components": {
-      "minecraft:potion_contents": {
-        "potion": "minecraft:awkward"
-      },
-      "minecraft:max_stack_size": 64
-    },
-    "id": "minecraft:potion"
+      "minecraft:custom_name": "\"OVERRIDE WORKS\""
+    }
   },
   "reagent": {
     "item": "minecraft:nether_wart"
