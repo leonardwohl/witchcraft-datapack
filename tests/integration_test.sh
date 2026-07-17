@@ -96,20 +96,20 @@ fi
 
 echo "[5/5] Verifying custom recipe exists via RCON..."
 RECIPE_OUTPUT=$(rcon_cmd "recipe list" || true)
-if echo "$RECIPE_OUTPUT" | grep -qi "witchcraft:example_brewing"; then
-    echo "       Recipe 'witchcraft:example_brewing' confirmed registered."
+if echo "$RECIPE_OUTPUT" | grep -qi "witchcraft:potion_water_nether_wart"; then
+    echo "       Recipe 'witchcraft:potion_water_nether_wart' confirmed registered."
 else
     # Some versions use 'recipe give' to test — try alternate approach
-    RECIPE_GIVE=$(rcon_cmd "recipe give @a witchcraft:example_brewing" || true)
+    RECIPE_GIVE=$(rcon_cmd "recipe give @a witchcraft:potion_water_nether_wart" || true)
     if echo "$RECIPE_GIVE" | grep -qi "no player\|unknown\|invalid"; then
         # "no player" is fine — it means the recipe exists but no player is online
-        echo "       Recipe 'witchcraft:example_brewing' confirmed registered (no player to grant)."
+        echo "       Recipe 'witchcraft:potion_water_nether_wart' confirmed registered (no player to grant)."
     elif echo "$RECIPE_GIVE" | grep -qi "unknown recipe\|invalid"; then
-        echo "FAILED: Recipe 'witchcraft:example_brewing' not found"
+        echo "FAILED: Recipe 'witchcraft:potion_water_nether_wart' not found"
         echo "       Output: $RECIPE_GIVE"
         exit 1
     else
-        echo "       Recipe 'witchcraft:example_brewing' confirmed registered."
+        echo "       Recipe 'witchcraft:potion_water_nether_wart' confirmed registered."
         echo "       Output: $RECIPE_GIVE"
     fi
 fi
