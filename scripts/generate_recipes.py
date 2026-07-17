@@ -8,7 +8,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
-RECIPE_DIR = PROJECT_ROOT / "data" / "minecraft" / "recipe"
+RECIPE_DIR = PROJECT_ROOT / "data" / "witchcraft" / "recipe"
 
 CONTAINER_TYPES = ["minecraft:potion", "minecraft:splash_potion", "minecraft:lingering_potion"]
 

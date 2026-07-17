@@ -81,8 +81,8 @@ def add_stack_size_to_output(recipe: dict, stack_size: int) -> dict:
 
 
 def load_our_recipes(root: Path) -> dict[str, dict]:
-    """Load our override recipes from data/minecraft/recipe/."""
-    recipe_dir = root / "data" / "minecraft" / "recipe"
+    """Load our override recipes from data/witchcraft/recipe/."""
+    recipe_dir = root / "data" / "witchcraft" / "recipe"
     recipes = {}
 
     if not recipe_dir.exists():
@@ -168,7 +168,7 @@ def main() -> int:
 
     if args.update:
         # Regenerate our overrides from vanilla
-        output_dir = root / "data" / "minecraft" / "recipe"
+        output_dir = root / "data" / "witchcraft" / "recipe"
         count = write_override_recipes(vanilla, output_dir, args.stack_size)
         print(f"Generated {count} override recipes in {output_dir}")
         return 0

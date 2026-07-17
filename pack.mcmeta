@@ -3,5 +3,17 @@
     "min_format": 110,
     "max_format": 110,
     "description": "Witchcraft - Custom brewing recipes"
+  },
+  "filter": {
+    "block": [
+      {
+        "namespace": "minecraft",
+        "path": "recipe/.*potion.*"
+      },
+      {
+        "namespace": "minecraft",
+        "path": "recipe/brewing/.*"
+      }
+    ]
   }
 }
