@@ -1,5 +1,7 @@
 # Witchcraft: Stackable Potions
 
+<img src="pack.png" alt="Witchcraft: Stackable Potions" width="128">
+
 A Minecraft Java datapack that makes all brewed potions stackable to 64.
 
 Targets **26.3 Snapshot 3** (Data Pack format 110).
