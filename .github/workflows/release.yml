@@ -29,7 +29,7 @@ jobs:
         uses: cloudnode-pro/modrinth-publish@v2
         with:
           token: ${{ secrets.MODRINTH_TOKEN }}
-          project: witchcraft-stackable-potions
+          project: rtd5v1Zg
           files: witchcraft-stackable-potions.zip
           version: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
