@@ -30,7 +30,7 @@ jobs:
         with:
           token: ${{ secrets.MODRINTH_TOKEN }}
           project: witchcraft-stackable-potions
-          file: witchcraft-stackable-potions.zip
+          files: witchcraft-stackable-potions.zip
           version: ${{ github.ref_name }}
           changelog: "See https://github.com/leonardwohl/witchcraft-datapack/releases/tag/${{ github.ref_name }}"
           loaders: datapack
