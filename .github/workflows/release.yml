@@ -17,10 +17,22 @@ jobs:
 
       - name: Build datapack zip
         run: |
-          zip -r witchcraft-stackable-potions.zip pack.mcmeta data/
+          zip -r witchcraft-stackable-potions.zip pack.mcmeta pack.png data/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: witchcraft-stackable-potions.zip
           generate_release_notes: true
+
+      - name: Publish to Modrinth
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: witchcraft-stackable-potions
+          file: witchcraft-stackable-potions.zip
+          version: ${{ github.ref_name }}
+          changelog: "See https://github.com/leonardwohl/witchcraft-datapack/releases/tag/${{ github.ref_name }}"
+          loaders: datapack
+          game-versions: 26.3-Snapshot.3
+          version-type: release
