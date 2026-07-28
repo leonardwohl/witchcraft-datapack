@@ -34,5 +34,5 @@ jobs:
           version: ${{ github.ref_name }}
           changelog: "See https://github.com/leonardwohl/witchcraft-datapack/releases/tag/${{ github.ref_name }}"
           loaders: datapack
-          game-versions: 26.3-Snapshot.3
+          game-versions: 26.3-Snapshot.3,26.3-Snapshot.4,26.3-Snapshot.5,26.3-Snapshot.6
           version-type: release
