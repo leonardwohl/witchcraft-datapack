@@ -51,10 +51,10 @@ echo ""
 # Clean slate
 $COMPOSE down -v 2>/dev/null || true
 
-echo "[1/5] Starting Minecraft server (snapshot)..."
+echo "[1/6] Starting Minecraft server (snapshot)..."
 $COMPOSE up -d
 
-echo "[2/5] Waiting for server to be ready (timeout: ${TIMEOUT}s)..."
+echo "[2/6] Waiting for server to be ready (timeout: ${TIMEOUT}s)..."
 SECONDS=0
 while [ $SECONDS -lt $TIMEOUT ]; do
     if $COMPOSE logs minecraft 2>/dev/null | grep -q "Done ("; then
@@ -75,7 +75,7 @@ fi
 # Give the server a moment to finish loading datapacks
 sleep 5
 
-echo "[3/5] Checking for recipe loading errors in logs..."
+echo "[3/6] Checking for recipe loading errors in logs..."
 ERRORS=$($COMPOSE logs minecraft 2>/dev/null | grep -i "failed to parse\|error.*recipe\|could not load.*recipe" || true)
 if [ -n "$ERRORS" ]; then
     echo "FAILED: Recipe errors found in server logs:"
@@ -84,7 +84,7 @@ if [ -n "$ERRORS" ]; then
 fi
 echo "       No recipe errors found in logs."
 
-echo "[4/5] Verifying datapack is loaded via RCON..."
+echo "[4/6] Verifying datapack is loaded via RCON..."
 DATAPACK_LIST=$(rcon_cmd "datapack list" || true)
 echo "       $DATAPACK_LIST"
 if echo "$DATAPACK_LIST" | grep -qi "witchcraft"; then
@@ -94,7 +94,7 @@ else
     exit 1
 fi
 
-echo "[5/5] Verifying custom recipe exists via RCON..."
+echo "[5/6] Verifying custom recipe exists via RCON..."
 RECIPE_OUTPUT=$(rcon_cmd "recipe list" || true)
 if echo "$RECIPE_OUTPUT" | grep -qi "witchcraft:potion_water_nether_wart"; then
     echo "       Recipe 'witchcraft:potion_water_nether_wart' confirmed registered."
@@ -112,6 +112,17 @@ else
         echo "       Recipe 'witchcraft:potion_water_nether_wart' confirmed registered."
         echo "       Output: $RECIPE_GIVE"
     fi
+fi
+
+echo "[6/6] Verifying tick functions and scoreboard..."
+# Check that the scoreboard objective was created by the load function
+SCOREBOARD_OUTPUT=$(rcon_cmd "scoreboard objectives list" || true)
+if echo "$SCOREBOARD_OUTPUT" | grep -qi "wc.bottles"; then
+    echo "       Scoreboard objective 'wc.bottles' confirmed created."
+else
+    echo "FAILED: Scoreboard objective 'wc.bottles' not found"
+    echo "       Output: $SCOREBOARD_OUTPUT"
+    exit 1
 fi
 
 echo ""
