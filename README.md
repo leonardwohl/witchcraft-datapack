@@ -10,8 +10,9 @@ Targets **26.3 Snapshot 3** (Data Pack format 110).
 
 1. A `pack.mcmeta` filter blocks all vanilla brewing recipes from loading
 2. 279 replacement recipes under the `witchcraft` namespace reproduce every vanilla brewing path, with `minecraft:max_stack_size: 64` added to each output
+3. A tick function fixes water bottles filled from source blocks (which bypass brewing recipes) — clearing unstackable bottles from player inventories and giving them back as stackable, and patching dropped water bottle items in-place
 
-Potions brewed with this datapack stack to 64 in your inventory. All vanilla brewing chains work normally (water → awkward → effect → splash → lingering, modifiers, corruption, etc.).
+Potions brewed with this datapack stack to 64 in your inventory. Water bottles filled from water sources are also automatically made stackable. All vanilla brewing chains work normally (water → awkward → effect → splash → lingering, modifiers, corruption, etc.).
 
 ## Installation
 
