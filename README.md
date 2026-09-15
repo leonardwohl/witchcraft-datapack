@@ -4,7 +4,7 @@
 
 A Minecraft Java datapack that makes all brewed potions stackable to 64.
 
-Targets **26.3 Snapshot 3** (Data Pack format 110).
+Targets **Minecraft 26.3** (Data Pack formats 110–121).
 
 ## How it works
 
