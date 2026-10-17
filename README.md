@@ -18,11 +18,11 @@ Potions brewed with this datapack stack to 64 in your inventory. Water bottles f
 
 ### Download
 
-Grab the latest release zip from [GitHub Releases](https://github.com/leonardwohl/witchcraft-datapack/releases/latest).
+Grab the latest release zip directly: [witchcraft-stackable-potions.zip](https://github.com/leonardwohl/witchcraft-datapack/releases/latest/download/witchcraft-stackable-potions.zip), or browse all versions on [GitHub Releases](https://github.com/leonardwohl/witchcraft-datapack/releases/latest).
 
 ### Singleplayer / Vanilla Server
 
-1. Download `witchcraft-stackable-potions.zip`
+1. Download `witchcraft-stackable-potions.zip` (or a versioned `witchcraft-stackable-potions-vX.Y.Z.zip`)
 2. Place it in your world's `datapacks/` folder:
    ```
    .minecraft/saves/<world>/datapacks/witchcraft-stackable-potions.zip
