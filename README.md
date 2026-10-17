@@ -76,7 +76,7 @@ make update-recipes  # Regenerate recipes and bump pack format from vanilla serv
 
 GitHub Actions runs on every push:
 - **Schema Validation** — checks all recipe JSON against the brewing recipe schema
-- **Integration Test** — boots a server for the newest version in `.github/modrinth-game-versions.txt`, verifies datapack loads and recipes register via RCON
+- **Integration Test** — boots a server for the newest version in `.github/modrinth-game-versions.txt`, fails on any datapack load error, then over RCON brews a potion in a brewing stand and checks it stacks, and checks the tick function patches a dropped water bottle
 - **Vanilla Drift Check** — extracts recipes from that version's server JAR and confirms our coverage matches 1:1 and its data pack format is inside `pack.mcmeta`'s range
 
 ### Updating for new Minecraft versions
