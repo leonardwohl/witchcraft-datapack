@@ -13,6 +13,12 @@ else
     echo "ERROR: Neither docker (running) nor podman found"
     exit 1
 fi
+# MC_VERSION accepts the same values as the drift check; map the aliases to itzg's names
+case "${MC_VERSION:-}" in
+    ""|latest-release) export MC_VERSION=LATEST ;;
+    latest-snapshot) export MC_VERSION=SNAPSHOT ;;
+esac
+
 TIMEOUT=180
 RCON_PASS="testing"
 RCON_PORT=25575
@@ -51,7 +57,7 @@ echo ""
 # Clean slate
 $COMPOSE down -v 2>/dev/null || true
 
-echo "[1/6] Starting Minecraft server (snapshot)..."
+echo "[1/6] Starting Minecraft server (${MC_VERSION})..."
 $COMPOSE up -d
 
 echo "[2/6] Waiting for server to be ready (timeout: ${TIMEOUT}s)..."

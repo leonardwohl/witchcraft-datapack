@@ -66,22 +66,25 @@ Requires Python 3.12+.
 make help            # Show all targets
 make validate        # JSON schema validation (~1s)
 make test            # Docker integration test (boots real MC server)
-make drift-check     # Compare recipes against vanilla server JAR
-make update-recipes  # Regenerate recipes from vanilla server JAR
+make drift-check     # Compare recipes and pack format against vanilla server JAR
+make update-recipes  # Regenerate recipes and bump pack format from vanilla server JAR
 ```
+
+`drift-check`, `update-recipes` and `test` take `MC_VERSION=latest-release` (default), `latest-snapshot`, or an exact version id like `26.3`.
 
 ### CI
 
 GitHub Actions runs on every push:
 - **Schema Validation** — checks all recipe JSON against the brewing recipe schema
-- **Integration Test** — boots a snapshot server, verifies datapack loads and recipes register via RCON
-- **Vanilla Drift Check** — extracts recipes from the server JAR and confirms our coverage matches 1:1
+- **Integration Test** — boots a server for the newest version in `.github/modrinth-game-versions.txt`, verifies datapack loads and recipes register via RCON
+- **Vanilla Drift Check** — extracts recipes from that version's server JAR and confirms our coverage matches 1:1 and its data pack format is inside `pack.mcmeta`'s range
 
-### Updating for new snapshots
+### Updating for new Minecraft versions
 
-When a new snapshot changes brewing recipes:
+The "Update Recipes from Vanilla" workflow runs daily against the latest release and the latest snapshot. When either one changes brewing recipes or the data pack format, it opens a PR (a draft for snapshots) that regenerates the recipes, raises `max_format` in `pack.mcmeta`, and adds the version to `.github/modrinth-game-versions.txt`. You can also run it by hand with a specific version, or locally with `make update-recipes MC_VERSION=<id>`.
 
-1. Update `pack.mcmeta` format versions
-2. Update the server JAR URL in `scripts/extract_vanilla_recipes.py`
-3. Run `make update-recipes` (or trigger the "Update Recipes from Vanilla" workflow on GitHub)
-4. Commit the regenerated files
+Snapshot PRs can add recipes for items that don't exist in the current release, so merge them only once you're ready to drop support for it.
+
+### Releasing
+
+Push a `vX.Y.Z` tag. The release workflow re-checks recipes against the newest version in `.github/modrinth-game-versions.txt`, then publishes the zip to GitHub Releases and Modrinth with that file as the list of supported game versions.

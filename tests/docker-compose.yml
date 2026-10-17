@@ -4,7 +4,7 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "VANILLA"
-      VERSION: "SNAPSHOT"
+      VERSION: "${MC_VERSION:-LATEST}"
       ENABLE_RCON: "true"
       RCON_PASSWORD: "testing"
       RCON_PORT: "25575"

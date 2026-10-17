@@ -12,13 +12,15 @@ validate: ## Run JSON schema validation on all recipes
 test: ## Run integration test (requires Docker or Podman)
 	@tests/integration_test.sh
 
-drift-check: ## Check our recipes match vanilla server JAR (requires internet)
-	@test -d .venv || python3 -m venv .venv
-	@.venv/bin/python3 scripts/extract_vanilla_recipes.py
+MC_VERSION ?= latest-release
 
-update-recipes: ## Regenerate recipe overrides from vanilla server JAR
+drift-check: ## Check recipes and pack format against vanilla (MC_VERSION=latest-release|latest-snapshot|<id>)
 	@test -d .venv || python3 -m venv .venv
-	@.venv/bin/python3 scripts/extract_vanilla_recipes.py --update
+	@.venv/bin/python3 scripts/extract_vanilla_recipes.py --version $(MC_VERSION)
+
+update-recipes: ## Regenerate recipes and bump pack format from vanilla (MC_VERSION=...)
+	@test -d .venv || python3 -m venv .venv
+	@.venv/bin/python3 scripts/extract_vanilla_recipes.py --version $(MC_VERSION) --update
 
 test-all: validate test ## Run all tests (schema + integration)
 
