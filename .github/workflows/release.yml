@@ -9,9 +9,29 @@ permissions:
   contents: write
 
 jobs:
+  verify:
+    name: Verify against target version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r tests/requirements.txt
+
+      - name: Schema validation
+        run: python tests/validate_recipes.py
+
+      # The last line of the game versions list is the newest version we claim to support
+      - name: Vanilla drift and pack format check
+        run: python scripts/extract_vanilla_recipes.py --version "$(tail -n1 .github/modrinth-game-versions.txt)"
+
   release:
     name: Build and Release
     runs-on: ubuntu-latest
+    needs: verify
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +40,15 @@ jobs:
           zip -r witchcraft-stackable-potions-${{ github.ref_name }}.zip pack.mcmeta pack.png data/
           # Unversioned copy so releases/latest/download/witchcraft-stackable-potions.zip always resolves
           cp witchcraft-stackable-potions-${{ github.ref_name }}.zip witchcraft-stackable-potions.zip
+
+      - name: Read Modrinth game versions
+        id: versions
+        run: |
+          {
+            echo "list<<EOF"
+            cat .github/modrinth-game-versions.txt
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -39,20 +68,5 @@ jobs:
           name: ${{ github.ref_name }}
           changelog: "See https://github.com/leonardwohl/witchcraft-datapack/releases/tag/${{ github.ref_name }}"
           loaders: datapack
-          game-versions: |
-            26.3-snapshot-3
-            26.3-snapshot-4
-            26.3-snapshot-5
-            26.3-snapshot-6
-            26.3-snapshot-7
-            26.3-snapshot-8
-            26.3-snapshot-9
-            26.3-snapshot-10
-            26.3-pre-1
-            26.3-pre-2
-            26.3-pre-3
-            26.3-rc-1
-            26.3-rc-2
-            26.3-rc-3
-            26.3
+          game-versions: ${{ steps.versions.outputs.list }}
           channel: release

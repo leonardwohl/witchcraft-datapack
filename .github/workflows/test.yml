@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run integration test
-        run: make test
+        run: MC_VERSION="$(tail -n1 .github/modrinth-game-versions.txt)" make test
 
   vanilla-drift:
     name: Vanilla Recipe Drift Check
@@ -43,8 +43,4 @@ jobs:
           python-version: "3.12"
 
       - name: Extract vanilla recipes and check coverage
-        run: python scripts/extract_vanilla_recipes.py
-
-      - name: Show diff if drift detected
-        if: failure()
-        run: python scripts/extract_vanilla_recipes.py --update && git diff --stat
+        run: python scripts/extract_vanilla_recipes.py --version "$(tail -n1 .github/modrinth-game-versions.txt)"
