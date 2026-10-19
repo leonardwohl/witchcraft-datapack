@@ -1,4 +1,4 @@
-.PHONY: validate test test-all clean help drift-check update-recipes
+.PHONY: validate pitcher-recipes test test-all clean help drift-check update-recipes
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
@@ -8,6 +8,10 @@ validate: ## Run JSON schema validation on all recipes
 	@test -d .venv || python3 -m venv .venv
 	@.venv/bin/pip install -r tests/requirements.txt -q
 	@.venv/bin/python3 tests/validate_recipes.py
+	@.venv/bin/python3 scripts/generate_pitcher_recipes.py --check
+
+pitcher-recipes: ## Regenerate the pitcher recipes from our potion recipes
+	@python3 scripts/generate_pitcher_recipes.py
 
 test: ## Run integration test (requires Docker or Podman)
 	@tests/integration_test.sh
