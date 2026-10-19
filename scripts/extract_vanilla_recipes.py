@@ -10,8 +10,8 @@ If --server-jar is not provided, downloads the server JAR for --version from Moj
 Check mode (default) fails if our recipes differ from vanilla or the server's data
 pack format is outside pack.mcmeta's min_format..max_format range.
 
-If --update is passed, regenerates our recipe overrides (and the pitcher recipes
-built from them) from the extracted vanilla recipes, raises pack.mcmeta max_format to the server's data pack format if needed,
+If --update is passed, regenerates our recipe overrides from the extracted vanilla
+recipes, raises pack.mcmeta max_format to the server's data pack format if needed,
 and adds the version id to the Modrinth game versions list.
 """
 
@@ -22,8 +22,6 @@ import tempfile
 import urllib.request
 import zipfile
 from pathlib import Path
-
-import generate_pitcher_recipes
 
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 STACK_SIZE = 64
@@ -245,7 +243,6 @@ def main() -> int:
         output_dir = root / "data" / "witchcraft" / "recipe"
         count = write_override_recipes(vanilla, output_dir, args.stack_size)
         print(f"Generated {count} override recipes in {output_dir}")
-        generate_pitcher_recipes.main([])
         update_pack_format(root, data_format)
         add_game_version(root, version_id)
         return 0
