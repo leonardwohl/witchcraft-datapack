@@ -19,7 +19,7 @@ def find_recipe_files(root: Path) -> list[Path]:
     if not data_dir.exists():
         print(f"ERROR: {data_dir} does not exist")
         sys.exit(1)
-    return sorted(data_dir.glob("*/recipe/**/*.json"))
+    return sorted(data_dir.glob("*/recipe/*.json"))
 
 
 def validate_recipes(recipe_files: list[Path], schema: dict) -> list[tuple[Path, str]]:
