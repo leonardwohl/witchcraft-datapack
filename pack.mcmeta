@@ -1,7 +1,7 @@
 {
   "pack": {
     "min_format": 110,
-    "max_format": 121,
+    "max_format": 125,
     "description": "Witchcraft: Stackable Potions"
   },
   "filter": {
