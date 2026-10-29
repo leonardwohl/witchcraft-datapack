@@ -140,10 +140,10 @@ else
     echo "       Output: $BREWED"
     exit 1
 fi
-if echo "$BREWED" | grep -q '"minecraft:max_stack_size": 64'; then
-    echo "       Brewed potion has max_stack_size 64."
+if echo "$BREWED" | grep -q '"minecraft:max_stack_size": 16'; then
+    echo "       Brewed potion has max_stack_size 16."
 else
-    echo "FAILED: Brewed potion is missing max_stack_size 64 (vanilla recipe or a bad override was used)"
+    echo "FAILED: Brewed potion is missing max_stack_size 16 (vanilla recipe or a bad override was used)"
     exit 1
 fi
 
@@ -159,8 +159,8 @@ fi
 
 echo "[7/7] Verifying tick function patches a dropped water bottle..."
 rcon_cmd 'summon item 0 -50 0 {Item:{id:"minecraft:potion",count:1,components:{"minecraft:potion_contents":{potion:"minecraft:water"}}},PickupDelay:32767,Tags:["wc_test"]}' >/dev/null
-if PATCHED=$(wait_for_rcon 10 ': 64' 'data get entity @e[type=item,tag=wc_test,limit=1] Item.components."minecraft:max_stack_size"'); then
-    echo "       Dropped water bottle patched to max_stack_size 64."
+if PATCHED=$(wait_for_rcon 10 ': 16' 'data get entity @e[type=item,tag=wc_test,limit=1] Item.components."minecraft:max_stack_size"'); then
+    echo "       Dropped water bottle patched to max_stack_size 16."
 else
     echo "FAILED: Dropped water bottle was not made stackable"
     echo "       Output: $PATCHED"
