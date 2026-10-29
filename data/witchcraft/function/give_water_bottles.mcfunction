@@ -1,1 +1,1 @@
-$give @s minecraft:potion[max_stack_size=64,potion_contents="minecraft:water"] $(count)
+$give @s minecraft:potion[max_stack_size=16,potion_contents="minecraft:water"] $(count)

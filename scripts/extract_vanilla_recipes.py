@@ -24,7 +24,7 @@ import zipfile
 from pathlib import Path
 
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
-STACK_SIZE = 64
+STACK_SIZE = 16
 GAME_VERSIONS_FILE = Path(".github") / "modrinth-game-versions.txt"
 
 
